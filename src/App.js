@@ -1,10 +1,8 @@
-import './App.css';
-import LoginForm from './Components/Auth/LoginForm';
+import "./App.css";
+import AuthBase from "./Components/Auth/AuthBase";
 
 function App() {
-  return (
-    <LoginForm/>
-  );
+  return <AuthBase />;
 }
 
 export default App;
