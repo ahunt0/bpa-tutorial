@@ -1,9 +1,9 @@
 import './App.css';
+import LoginForm from './Components/Auth/LoginForm';
 
 function App() {
   return (
-    <div className="p-4 bg-slate-600 w-11">
-    </div>
+    <LoginForm/>
   );
 }
 
