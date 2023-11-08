@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 export default function LoginForm() {
   return (
     <AuthBase>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} exit={{ opacity: 0 }}>
+      <motion.div initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ ease: "easeOut", duration: 0.3 }}>
         <div className="ml-4 pt-4">
           <h1 className="text-4xl font-bold mb-4">Login</h1>
           <p className="text-xl mb-8 text-default-600">
