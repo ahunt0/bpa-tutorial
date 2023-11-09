@@ -16,7 +16,7 @@ export default function LoginForm() {
           <div className="md:w-96">
             <Input type="email" label="Email" className="mb-4" />
             <Input type="password" label="Password" className="mb-4" />
-            <a href="#" className="text-primary-500">
+            <a href="#" className="text-primary-500 hover:text-primary-600 ease-in-out duration-400">
               Forgot password?
             </a>
             <Button color="primary" variant="shadow" className="w-full mt-4 font-bold">
@@ -25,7 +25,7 @@ export default function LoginForm() {
             <Divider className="my-4" />
             <p className="text-center">
               Don't have an account?{" "}
-              <Link to="/register" className="text-primary-500">
+              <Link to="/register" className="text-primary-500 hover:text-primary-600 ease-in-out duration-400">
                 Register here.
               </Link>
             </p>

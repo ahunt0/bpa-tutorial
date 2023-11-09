@@ -13,7 +13,7 @@ export default function RegistrationForm() {
           <p className="text-xl mb-8 text-default-600">
             Please register to access <span className="text-primary-500">PLACEHOLDER</span>
           </p>
-          <div className="md:w-96">
+          <div className="flex flex-col items-center justify-center md:items-start md:justify-start mr-4">
             <div className="flex gap-4">
               <Input type="text" label="First Name" isRequired className="mb-4" />
               <Input type="text" label="Last Name" isRequired className="mb-4" />
@@ -30,7 +30,7 @@ export default function RegistrationForm() {
             <Divider className="my-4" />
             <p className="text-center">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary-500">
+              <Link to="/login" className="text-primary-500 hover:text-primary-600 ease-in-out duration-400">
                 Login here.
               </Link>
             </p>

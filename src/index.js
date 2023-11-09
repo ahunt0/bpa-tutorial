@@ -11,10 +11,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <NextUIProvider>
     <Router>
-      <AnimatePresence exit>
+      <AnimatePresence mode="wait" exit>
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
+          <Route path="*" element={<LoginForm />} /> {/* temporary default route */}
         </Routes>
       </AnimatePresence>
     </Router>
