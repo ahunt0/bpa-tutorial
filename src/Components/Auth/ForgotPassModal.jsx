@@ -4,7 +4,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Check
 export default function ForgotPassModal({ isOpen, setIsOpen }) {
   return (
     <>
-      <Modal className="dark text-white" size="xl" isOpen={isOpen} onClose={() => setIsOpen(false)} placement="top-center">
+      <Modal className="dark text-white" backdrop="blur" size="xl" isOpen={isOpen} onClose={() => setIsOpen(false)} placement="top-center">
         <ModalContent>
           {(onClose) => (
             <>
