@@ -12,10 +12,6 @@ const LoginForm = () => {
   const onOpen = () => {
     setIsModalOpen(true);
   };
-
-  const onClose = () => {
-    setIsModalOpen(false);
-  };
   return (
     <AuthBase>
       <motion.div initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ ease: "easeOut", duration: 0.3 }}>

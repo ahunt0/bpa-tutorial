@@ -5,6 +5,17 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 export default function RegistrationForm() {
+  // Email Validation
+  const [value, setValue] = React.useState("");
+
+  const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+
+  const isInvalid = React.useMemo(() => {
+    if (value === "") return false;
+
+    return validateEmail(value) ? false : true;
+  }, [value]);
+
   return (
     <AuthBase>
       <motion.div initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ ease: "easeOut", duration: 0.3 }}>
@@ -18,11 +29,24 @@ export default function RegistrationForm() {
               <Input type="text" label="First Name" isRequired className="mb-4" />
               <Input type="text" label="Last Name" isRequired className="mb-4" />
             </div>
-            <Input type="email" label="Email" isRequired className="mb-4" />
+            <Input
+              type="email"
+              label="Email"
+              isRequired
+              variant={isInvalid ? "bordered" : "flat"}
+              errorMessage={isInvalid && "Please enter a valid email"}
+              isInvalid={isInvalid}
+              onValueChange={setValue}
+              value={value}
+              className="mb-4"
+            />
             <Input type="password" label="Password" isRequired className="mb-4" />
             <Input type="password" label="Confirm Password" isRequired className="mb-4" />
             <Checkbox color="primary" className="mb-4">
-              I agree to the terms and conditions
+              I agree to the{" "}
+              <Link to="#" className="text-primary-500 hover:text-primary-600 ease-in-out duration-400 underline underline-offset-4">
+                terms and conditions
+              </Link>
             </Checkbox>
             <Button color="primary" variant="shadow" className="w-full font-bold">
               Register
