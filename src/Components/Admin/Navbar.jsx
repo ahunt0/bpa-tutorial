@@ -1,12 +1,23 @@
 import React from "react";
 import { UserIcon, InboxIcon } from "../Common/Icons";
 import { Divider, Badge } from "@nextui-org/react";
+import { useLocation } from "react-router-dom";
+
+const pageTitleMap = {
+	"/admin/users": "Users",
+	"/admin": "Dashboard",
+	// Add more paths and their associated titles as needed
+};
 
 export default function Nav() {
+	const location = useLocation();
+	const currentPage = location.pathname.replace(/\/$/, ""); // Remove trailing slash
+	const pageTitle = pageTitleMap[currentPage] || "Default Title";
+
 	return (
 		<nav className="dark flex justify-between items-center w-full bg-default-50 p-4">
 			<div className="flex flex-col text-white">
-				<span className="font-semibold text-xl tracking-wide">Dashboard</span>
+				<span className="font-semibold text-xl tracking-wide">{pageTitle}</span>
 				<p className="text-gray-400 text-sm">Welcome back USER</p>
 			</div>
 			<div className="flex items-center text-white text-sm">
