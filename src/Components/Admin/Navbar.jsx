@@ -6,7 +6,6 @@ import { useLocation } from "react-router-dom";
 const pageTitleMap = {
 	"/admin/users": "Users",
 	"/admin": "Dashboard",
-	// Add more paths and their associated titles as needed
 };
 
 export default function Nav() {

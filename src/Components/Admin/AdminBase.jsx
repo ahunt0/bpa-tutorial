@@ -2,11 +2,21 @@ import React from "react";
 import Nav from "./Navbar";
 import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
+import { useLocation } from "react-router-dom";
+
+const pageTitleMap = {
+	"/admin/users": "users",
+	"/admin": "dashboard",
+};
 
 export default function AdminBase({ children }) {
+	const location = useLocation();
+	const currentPage = location.pathname.replace(/\/$/, ""); // Remove trailing slash
+	const pageTitle = pageTitleMap[currentPage] || "Default Title";
+
 	return (
 		<div className="flex">
-			<Sidebar />
+			<Sidebar currentPage={pageTitle} />
 			<div className="flex flex-col w-full">
 				<Nav />
 				<div className="flex-grow p-4">
