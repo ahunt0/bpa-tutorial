@@ -75,7 +75,7 @@ export default function Users() {
 							<TableCell>
 								<User name={`${user.FirstName} ${user.LastName}`} description={user.Email} />
 							</TableCell>
-							<TableCell>{user.Access}</TableCell>
+							<TableCell className="capitalize">{user.Access}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
