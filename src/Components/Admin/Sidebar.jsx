@@ -8,10 +8,10 @@ export default function Sidebar({ className, currentPage }) {
 		<div className={`dark h-screen w-1/6 bg-default-50 flex flex-col ${className} left-0 top-0`}>
 			<p className="text-white mb-8 text-center mt-6">LOGO HERE</p>
 			<div className="mt-8 w-full flex flex-col justify-center items-center">
-				<SidebarButton selected={currentPage === "dashboard"} href="./">
+				<SidebarButton selected={currentPage === "dashboard"} href="/admin">
 					<DashboardIcon className="w-6" /> Dashboard
 				</SidebarButton>
-				<SidebarButton selected={currentPage === "users"} className="mt-4" href="./users">
+				<SidebarButton selected={currentPage === "users"} className="mt-4" href="/admin/users">
 					<UsersIcon className="w-6" /> Users
 				</SidebarButton>
 				<SidebarButton selected={currentPage === "courses"} className="mt-4" href="./">

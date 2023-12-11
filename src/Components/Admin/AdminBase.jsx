@@ -9,13 +9,13 @@ const pageTitleMap = {
 	"/admin": "dashboard",
 };
 
-export default function AdminBase({ children }) {
+export default function AdminBase({ children, className }) {
 	const location = useLocation();
 	const currentPage = location.pathname.replace(/\/$/, ""); // Remove trailing slash
 	const pageTitle = pageTitleMap[currentPage] || "Default Title";
 
 	return (
-		<div className="flex">
+		<div className={`flex ${className}`}>
 			<Sidebar currentPage={pageTitle} />
 			<div className="flex flex-col w-full">
 				<Nav />
