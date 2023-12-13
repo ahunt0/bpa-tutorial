@@ -8,17 +8,17 @@ export default function Sidebar({ className, currentPage }) {
 		<div className={`dark h-screen w-1/6 bg-default-50 flex flex-col ${className} left-0 top-0`}>
 			<p className="text-white mb-8 text-center mt-6">LOGO HERE</p>
 			<div className="mt-8 w-full flex flex-col justify-center items-center">
-				<SidebarButton selected={currentPage === "dashboard"} href="/admin">
-					<DashboardIcon className="w-6" /> Dashboard
+				<SidebarButton selected={currentPage === "dashboard"} to="/admin">
+					<DashboardIcon className="w-6 mr-2" /> Dashboard
 				</SidebarButton>
-				<SidebarButton selected={currentPage === "users"} className="mt-4" href="/admin/users">
-					<UsersIcon className="w-6" /> Users
+				<SidebarButton selected={currentPage === "users"} className="mt-4" to="/admin/users">
+					<UsersIcon className="w-6 mr-2" /> Users
 				</SidebarButton>
-				<SidebarButton selected={currentPage === "courses"} className="mt-4" href="./">
-					<AssignmentsIcon className="w-6" /> Courses
+				<SidebarButton selected={currentPage === "courses"} className="mt-4" to="./">
+					<AssignmentsIcon className="w-6 mr-2" /> Courses
 				</SidebarButton>
-				<SidebarButton selected={currentPage === "logs"} className="mt-4" href="./">
-					<LogsIcon className="w-6" /> Logs
+				<SidebarButton selected={currentPage === "logs"} className="mt-4" to="./">
+					<LogsIcon className="w-6 mr-2" /> Logs
 				</SidebarButton>
 			</div>
 			<div className="mt-auto p-4">

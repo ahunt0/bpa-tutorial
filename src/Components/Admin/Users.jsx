@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminBase from "./AdminBase";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Input, Pagination, Spinner, Select, SelectSection, SelectItem, Button } from "@nextui-org/react";
-import { SearchIcon, ChevronDownIcon } from "../Common/Icons";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Input, Pagination, Spinner, Select, SelectSection, SelectItem } from "@nextui-org/react";
+import { SearchIcon } from "../Common/Icons";
 import axios from "axios";
 
 export default function Users() {
@@ -105,7 +105,7 @@ export default function Users() {
 			<Table aria-label="User list">
 				<TableHeader>
 					<TableColumn>ID</TableColumn>
-					<TableColumn>NAME</TableColumn>
+					<TableColumn>USER</TableColumn>
 					<TableColumn>ROLE</TableColumn>
 				</TableHeader>
 				<TableBody emptyContent="No users found.">
