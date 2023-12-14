@@ -1,7 +1,26 @@
 import React, { useState, useEffect } from "react";
 import AdminBase from "./AdminBase";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, User, Input, Pagination, Spinner, Select, SelectSection, SelectItem } from "@nextui-org/react";
-import { SearchIcon } from "../Common/Icons";
+import {
+	Table,
+	TableHeader,
+	TableColumn,
+	TableBody,
+	TableRow,
+	TableCell,
+	User,
+	Input,
+	Pagination,
+	Spinner,
+	Select,
+	SelectSection,
+	SelectItem,
+	Button,
+	Dropdown,
+	DropdownTrigger,
+	DropdownMenu,
+	DropdownItem,
+} from "@nextui-org/react";
+import { SearchIcon, EllipsisHorizontalIcon } from "../Common/Icons";
 import axios from "axios";
 
 export default function Users() {
@@ -86,6 +105,7 @@ export default function Users() {
 					label="Role"
 					className="w-48"
 					size="sm"
+					radius="lg"
 					onSelectionChange={(value) => handleRoleChange(value)} // Handle role change
 				>
 					<SelectSection title="Role">
@@ -107,6 +127,7 @@ export default function Users() {
 					<TableColumn>ID</TableColumn>
 					<TableColumn>USER</TableColumn>
 					<TableColumn>ROLE</TableColumn>
+					<TableColumn>ACTIONS</TableColumn>
 				</TableHeader>
 				<TableBody emptyContent="No users found.">
 					{loading ? ( // Render loading indicator if loading is true
@@ -114,6 +135,7 @@ export default function Users() {
 							<TableCell colSpan={3} align="center">
 								<Spinner />
 							</TableCell>
+							<TableCell></TableCell>
 							<TableCell></TableCell>
 							<TableCell></TableCell>
 						</TableRow>
@@ -125,6 +147,19 @@ export default function Users() {
 									<User name={`${user.FirstName} ${user.LastName}`} description={user.Email} />
 								</TableCell>
 								<TableCell className="capitalize">{user.Access}</TableCell>
+								<TableCell>
+									<Dropdown>
+										<DropdownTrigger>
+											<Button isIconOnly size="sm" variant="light">
+												<EllipsisHorizontalIcon className="text-default-400" />
+											</Button>
+										</DropdownTrigger>
+										<DropdownMenu>
+											<DropdownItem>Edit</DropdownItem>
+											<DropdownItem className="text-danger">Delete</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
+								</TableCell>
 							</TableRow>
 						))
 					)}

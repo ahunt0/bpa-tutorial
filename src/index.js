@@ -4,6 +4,7 @@ import LoginForm from "./Components/Auth/LoginForm";
 import RegistrationForm from "./Components/Auth/RegistrationForm";
 import Dashboard from "./Components/Admin/Dashboard";
 import Users from "./Components/Admin/Users";
+import UserEdit from "./Components/Admin/UserEdit";
 import { NextUIProvider } from "@nextui-org/react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -17,7 +18,7 @@ root.render(
 				<Routes>
 					<Route path="/login" element={<LoginForm />} />
 					<Route path="/register" element={<RegistrationForm />} />
-					<Route path="*" element={<Dashboard />} /> {/* temporary default route */}
+					<Route path="*" element={<UserEdit />} /> {/* temporary default route */}
 					<Route path="/admin/users" element={<Users />} />
 					<Route path="/admin" element={<Dashboard />} />
 				</Routes>
