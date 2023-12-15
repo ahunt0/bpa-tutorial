@@ -20,6 +20,7 @@ root.render(
 					<Route path="/register" element={<RegistrationForm />} />
 					<Route path="*" element={<UserEdit />} /> {/* temporary default route */}
 					<Route path="/admin/users" element={<Users />} />
+					<Route path="/admin/user/:id" element={<UserEdit />} />
 					<Route path="/admin" element={<Dashboard />} />
 				</Routes>
 			</AnimatePresence>
