@@ -5,6 +5,7 @@ import Dashboard from "./Dashboard";
 import { useLocation } from "react-router-dom";
 
 const pageTitleMap = {
+	"/admin/user/": "Edit User",
 	"/admin/users": "users",
 	"/admin": "dashboard",
 };

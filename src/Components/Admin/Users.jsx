@@ -155,7 +155,7 @@ export default function Users() {
 											</Button>
 										</DropdownTrigger>
 										<DropdownMenu>
-											<DropdownItem>Edit</DropdownItem>
+											<DropdownItem href={`/admin/user/${user.UserID}`}>Edit</DropdownItem>
 											<DropdownItem className="text-danger">Delete</DropdownItem>
 										</DropdownMenu>
 									</Dropdown>

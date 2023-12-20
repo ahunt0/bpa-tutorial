@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminBase from "./AdminBase";
-import { Card, CardBody, Skeleton } from "@nextui-org/react";
+import { Card, CardBody, Skeleton, Input, RadioGroup, Radio } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -28,19 +28,28 @@ export default function UserEdit() {
 
 	return (
 		<AdminBase>
-			<div className="flex justify-center space-x-8">
-				<Card className="w-3/4">
+			<div className="justify-center space-x-8">
+				<Card className="p-4">
 					<CardBody>
 						<div>
 							{user ? (
-								<div>
-									<h1>
-										{user.FirstName} {user.LastName}
-									</h1>
-									<p>Email: {user.Email}</p>
-									<p>
-										Registration Date: {new Date(user.RegistrationDate).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true })}
-									</p>
+								<div className="">
+									<div className="flex space-x-4 my-4">
+										<Input label="First Name" value={user.FirstName} />
+										<Input label="Last Name" value={user.LastName} />
+									</div>
+									<Input label="Email" value={user.Email} className="mb-4" />
+									<RadioGroup label="Role" value={user.Access} orientation="horizontal" className="mb-4">
+										<Radio value="student">Student</Radio>
+										<Radio value="teacher">Teacher</Radio>
+										<Radio value="admin">Admin</Radio>
+									</RadioGroup>
+									<Input
+										label="Registration Date"
+										value={new Date(user.RegistrationDate).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true })}
+										className="mb-6"
+									/>
+									<p className="absolute bottom-0 right-0 text-sm text-default-500">ID • {user.UserID}</p>
 								</div>
 							) : error ? (
 								<p>{error}</p>

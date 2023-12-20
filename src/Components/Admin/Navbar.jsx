@@ -8,10 +8,19 @@ const pageTitleMap = {
 	"/admin": "Dashboard",
 };
 
-export default function Nav() {
+export default function AdminBase({ children, className }) {
 	const location = useLocation();
 	const currentPage = location.pathname.replace(/\/$/, ""); // Remove trailing slash
-	const pageTitle = pageTitleMap[currentPage] || "Default Title";
+	let pageTitle = "Default Title";
+
+	// Regex pattern to match '/admin/user/' followed by a number
+	const userEditPattern = /^\/admin\/user\/\d+$/;
+
+	if (userEditPattern.test(currentPage)) {
+		pageTitle = "Edit User";
+	} else {
+		pageTitle = pageTitleMap[currentPage] || "Default Title";
+	}
 
 	return (
 		<nav className="dark flex justify-between items-center w-full bg-default-50 p-4">
