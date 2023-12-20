@@ -68,9 +68,18 @@ export default function Users() {
 
 	const handleRoleChange = (value) => {
 		// Check if the value is an object with 'student' property
-		const selectedRoleValue = typeof value === "object" ? Object.values(value)[1] : value;
+		const selectedRoleValue = Object.values(value)[1];
 
-		setSelectedRole(selectedRoleValue);
+		// Get the previous selected role
+		const previousSelectedRole = selectedRole;
+
+		// If the current and previous roles are the same, it means the role was de-selected
+		if (selectedRoleValue === previousSelectedRole) {
+			setSelectedRole("");
+		} else {
+			setSelectedRole(selectedRoleValue);
+		}
+
 		setCurrentPage(1); // Reset to the first page when changing the role
 	};
 
