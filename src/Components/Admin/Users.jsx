@@ -62,6 +62,21 @@ export default function Users() {
 		}
 	};
 
+	const deleteUser = async (id) => {
+		try {
+			const response = await axios.delete(`http://localhost:3001/api/v1/admin/user/delete/${id}`);
+			if (response.status === 200) {
+				// Remove the user from the local state
+				setUserData(userData.filter((user) => user.id !== id));
+				fetchUsers(); // Refresh the user list
+			} else {
+				console.error("Error deleting user:", response);
+			}
+		} catch (error) {
+			console.error("Error deleting user:", error);
+		}
+	};
+
 	useEffect(() => {
 		fetchUsers();
 	}, [searchInput, selectedRole]); // Fetch when search input or selected role changes
@@ -99,14 +114,14 @@ export default function Users() {
 
 	return (
 		<AdminBase>
-			<div className="flex mb-4">
+			<div className="flex mb-4 bg-default-50 p-4 rounded-xl">
 				<Input
 					className="w-96 mr-4"
 					placeholder="Search by name..."
 					size="sm"
 					radius="lg"
 					fullWidth={false}
-					startContent={<SearchIcon className={"w-5"} />}
+					startContent={<SearchIcon className={"w-5 text-default-600"} />}
 					value={searchInput}
 					onChange={(e) => handleSearch(e.target.value)}
 				/>
@@ -165,7 +180,9 @@ export default function Users() {
 										</DropdownTrigger>
 										<DropdownMenu>
 											<DropdownItem href={`/admin/user/${user.UserID}`}>Edit</DropdownItem>
-											<DropdownItem className="text-danger">Delete</DropdownItem>
+											<DropdownItem onClick={() => deleteUser(user.UserID)} className="text-danger">
+												Delete
+											</DropdownItem>
 										</DropdownMenu>
 									</Dropdown>
 								</TableCell>
