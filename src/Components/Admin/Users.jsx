@@ -20,8 +20,9 @@ import {
 	DropdownMenu,
 	DropdownItem,
 } from "@nextui-org/react";
-import { SearchIcon, EllipsisHorizontalIcon } from "../Common/Icons";
+import { SearchIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon } from "../Common/Icons";
 import axios from "axios";
+import ToastNotification from "../Common/ToastNotification";
 
 export default function Users() {
 	const [userData, setUserData] = useState([]);
@@ -31,6 +32,11 @@ export default function Users() {
 	const [totalPages, setTotalPages] = useState(0);
 	const [loading, setLoading] = useState(false); // Loading state
 	const [selectedRole, setSelectedRole] = useState(""); // State to capture the selected role
+	const [showToast, setShowToast] = useState(false);
+
+	const showToastMessage = () => {
+		setShowToast(true);
+	};
 
 	const fetchUsers = async () => {
 		try {
@@ -69,6 +75,7 @@ export default function Users() {
 				// Remove the user from the local state
 				setUserData(userData.filter((user) => user.id !== id));
 				fetchUsers(); // Refresh the user list
+				showToastMessage();
 			} else {
 				console.error("Error deleting user:", response);
 			}
@@ -172,16 +179,24 @@ export default function Users() {
 								</TableCell>
 								<TableCell className="capitalize">{user.Access}</TableCell>
 								<TableCell>
-									<Dropdown>
+									<Dropdown className="dark">
 										<DropdownTrigger>
 											<Button isIconOnly size="sm" variant="light">
 												<EllipsisHorizontalIcon className="text-default-400" />
 											</Button>
 										</DropdownTrigger>
 										<DropdownMenu>
-											<DropdownItem href={`/admin/user/${user.UserID}`}>Edit</DropdownItem>
+											<DropdownItem href={`/admin/user/${user.UserID}`} className="text-default-600">
+												<div className="flex">
+													<PencilIcon className="w-4 mr-2" />
+													Edit
+												</div>
+											</DropdownItem>
 											<DropdownItem onClick={() => deleteUser(user.UserID)} className="text-danger">
-												Delete
+												<div className="flex">
+													<TrashIcon className="w-4 mr-2" />
+													Delete
+												</div>
 											</DropdownItem>
 										</DropdownMenu>
 									</Dropdown>
@@ -191,6 +206,7 @@ export default function Users() {
 					)}
 				</TableBody>
 			</Table>
+			{showToast && <ToastNotification message="User deleted successfully" onClose={() => setShowToast(false)} />}
 
 			{totalPages > 1 && <Pagination className="absolute bottom-8" showControls="true" total={totalPages} current={currentPage} onChange={handlePageChange} />}
 		</AdminBase>

@@ -3,6 +3,7 @@ import AdminBase from "./AdminBase";
 import { Card, CardBody, Skeleton, Input, RadioGroup, Radio, Button } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import ToastNotification from "../Common/ToastNotification";
 
 export default function UserEdit() {
 	const { id } = useParams();
@@ -14,6 +15,12 @@ export default function UserEdit() {
 		Email: "",
 		Access: "",
 	});
+
+	const [showToast, setShowToast] = useState(false);
+
+	const showToastMessage = () => {
+		setShowToast(true);
+	};
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -51,6 +58,7 @@ export default function UserEdit() {
 		try {
 			await axios.put(`http://localhost:3001/api/v1/admin/user/edit/${id}`, formData);
 			console.log(formData);
+			showToastMessage();
 		} catch (error) {
 			console.error(error);
 			setError(error.message);
@@ -82,7 +90,10 @@ export default function UserEdit() {
 											className="mb-6"
 											isDisabled
 										/>
-										<p className="absolute bottom-0 right-0 text-sm text-default-500">ID • {user.UserID}</p>
+										<Button type="submit" color="primary" variant="shadow">
+											Save
+										</Button>
+										<p className="absolute bottom-0 right-0 text-sm text-default-500">UID • {user.UserID}</p>
 									</div>
 								) : error ? (
 									<p>{error}</p>
@@ -90,11 +101,11 @@ export default function UserEdit() {
 									<p>Loading...</p>
 								)}
 							</div>
-							<Button type="submit">Submit</Button>
 						</form>
 					</CardBody>
 				</Card>
 			</div>
+			{showToast && <ToastNotification message="Saved successfully" onClose={() => setShowToast(false)} />}
 		</AdminBase>
 	);
 }
