@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input, Button, Divider, Checkbox } from "@nextui-org/react";
 import AuthBase from "./AuthBase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 
@@ -15,8 +15,10 @@ export default function RegistrationForm() {
 		// confirmPassword: "",
 	});
 
+	const navigate = useNavigate();
 	const [error, setError] = useState(null);
 
+	// Form submission
 	const handleChange = (e, fieldName) => {
 		const { value } = e.target;
 		setUser((prev) => ({ ...prev, [fieldName]: value }));
@@ -27,7 +29,11 @@ export default function RegistrationForm() {
 		try {
 			const response = await axios.post(`http://localhost:3001/api/v1/auth/register`, user);
 			console.log(response.data);
-			// Handle success or any other actions
+
+			if (response.data.success) {
+				// If successful, redirect to login page
+				navigate("/login", { state: { message: "User created successfully" } });
+			}
 		} catch (error) {
 			console.error("Error submitting form:", error);
 			// Handle error

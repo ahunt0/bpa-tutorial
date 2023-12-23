@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Button, Divider, Checkbox } from "@nextui-org/react";
 import AuthBase from "./AuthBase";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import ForgotPassModal from "./ForgotPassModal";
 import axios from "axios";
+import ToastNotification from "../Common/ToastNotification";
 
 export default function LoginForm() {
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.state && location.state.message) {
+			showToastMessage();
+		}
+	}, [location]);
+
+	// Toast notification
+	const [showToast, setShowToast] = useState(false);
+
+	const showToastMessage = () => {
+		setShowToast(true);
+	};
+
 	const [user, setUser] = useState({
 		email: "",
 		password: "",
@@ -103,6 +119,7 @@ export default function LoginForm() {
 				</div>
 			</motion.div>
 			<ForgotPassModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+			{showToast && <ToastNotification message="Registration successful, please login!" onClose={() => setShowToast(false)} />}
 		</AuthBase>
 	);
 }
