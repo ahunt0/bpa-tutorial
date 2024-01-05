@@ -8,6 +8,7 @@ import UserEdit from "./Components/Admin/UserEdit";
 import Courses from "./Components/Admin/Courses";
 import CourseEdit from "./Components/Admin/CourseEdit";
 import Assignments from "./Components/Admin/Assignments";
+import AssignmentEdit from "./Components/Admin/AssignmentEdit";
 import { NextUIProvider } from "@nextui-org/react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -29,6 +30,7 @@ root.render(
 					<Route path="/admin/courses" element={<Courses />} />
 					<Route path="/admin/course/:id" element={<CourseEdit />} />
 					<Route path="/admin/assignments/:id" element={<Assignments />} />
+					<Route path="/admin/assignment/:id" element={<AssignmentEdit />} />
 				</Routes>
 			</AnimatePresence>
 		</Router>

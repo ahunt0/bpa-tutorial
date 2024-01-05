@@ -65,6 +65,9 @@ export default function NewCourseModal({ isOpen, setIsOpen, onModalSubmit }) {
 			} else if (error.response.data.code === 2) {
 				setToastMessage("Teacher already has a course");
 				showToastMessage();
+			} else {
+				setToastMessage("Something went wrong");
+				showToastMessage();
 			}
 		}
 	};

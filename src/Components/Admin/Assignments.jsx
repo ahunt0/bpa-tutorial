@@ -123,7 +123,7 @@ export default function Assignments() {
 											</Button>
 										</DropdownTrigger>
 										<DropdownMenu>
-											<DropdownItem className="text-default-600">
+											<DropdownItem href={`/admin/assignment/${assignment.AssignmentID}`} className="text-default-600">
 												<div className="flex">
 													<PencilIcon className="w-4 mr-2" />
 													Edit

@@ -52,6 +52,9 @@ export default function NewAssignmentModal({ isOpen, setIsOpen, onModalSubmit })
 			if (error.response.data.code === 1) {
 				setToastMessage("Assignment name already exists");
 				showToastMessage();
+			} else {
+				setToastMessage("Something went wrong");
+				showToastMessage();
 			}
 		}
 	};
