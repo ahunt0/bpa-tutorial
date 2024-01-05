@@ -59,7 +59,7 @@ export default function Assignments() {
 
 	useEffect(() => {
 		fetchAssignmentsData();
-	}, []);
+	}, [searchInput]);
 
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
@@ -74,7 +74,16 @@ export default function Assignments() {
 			<div>
 				<div className="flex mb-4 bg-default-50 p-4 rounded-xl justify-between">
 					<div className="flex">
-						<Input className="w-96 mr-4" placeholder="Search for assignment..." size="sm" radius="lg" fullWidth={false} startContent={<SearchIcon className={"w-5 text-default-600"} />} />
+						<Input
+							className="w-96 mr-4"
+							placeholder="Search for assignment..."
+							size="sm"
+							radius="lg"
+							fullWidth={false}
+							startContent={<SearchIcon className={"w-5 text-default-600"} />}
+							value={searchInput}
+							onChange={(e) => setSearchInput(e.target.value)}
+						/>
 					</div>
 					<Button className="h-12" color="primary" variant="shadow" radius="lg" onClick={onOpen}>
 						New Assignment
