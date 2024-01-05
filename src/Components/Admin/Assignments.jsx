@@ -57,6 +57,15 @@ export default function Assignments() {
 		}
 	};
 
+	const deleteAssignment = async (id) => {
+		try {
+			const response = await axios.delete(`http://localhost:3001/api/v1/admin/assignment/delete/${id}`, { withCredentials: true });
+			fetchAssignmentsData();
+		} catch (error) {
+			console.error("Error deleting assignment:", error);
+		}
+	};
+
 	useEffect(() => {
 		fetchAssignmentsData();
 	}, [searchInput]);
@@ -127,7 +136,7 @@ export default function Assignments() {
 												</div>
 											</DropdownItem>
 											<DropdownItem className="text-danger">
-												<div className="flex">
+												<div onClick={() => deleteAssignment(assignment.AssignmentID)} className="flex">
 													<TrashIcon className="w-4 mr-2" />
 													Delete
 												</div>
