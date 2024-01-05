@@ -7,6 +7,7 @@ export default function NewCourseModal({ isOpen, setIsOpen, onModalSubmit }) {
 	const grades = ["Kindergarten", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
 	const [teachers, setTeachers] = useState([]);
 	const [showToast, setShowToast] = useState(false);
+	const [toastMessage, setToastMessage] = useState("");
 
 	const showToastMessage = () => {
 		setShowToast(true);
@@ -58,7 +59,13 @@ export default function NewCourseModal({ isOpen, setIsOpen, onModalSubmit }) {
 			}
 		} catch (error) {
 			console.error("Error submitting form:", error);
-			showToastMessage();
+			if (error.response.data.code === 1) {
+				setToastMessage("Course name already exists");
+				showToastMessage();
+			} else if (error.response.data.code === 2) {
+				setToastMessage("Teacher already has a course");
+				showToastMessage();
+			}
 		}
 	};
 
@@ -110,7 +117,7 @@ export default function NewCourseModal({ isOpen, setIsOpen, onModalSubmit }) {
 					)}
 				</ModalContent>
 			</Modal>
-			{showToast && <ToastNotification message="Error: Teacher already has a course" onClose={() => setShowToast(false)} />}
+			{showToast && <ToastNotification message={`Error: ${toastMessage}`} onClose={() => setShowToast(false)} />}
 		</>
 	);
 }

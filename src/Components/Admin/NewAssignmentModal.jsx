@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectSection, SelectItem, Textarea, User } from "@nextui-org/react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ToastNotification from "../Common/ToastNotification";
 
 export default function NewAssignmentModal({ isOpen, setIsOpen, onModalSubmit }) {
 	const [contentType, setContentType] = useState(new Set([]));
@@ -14,6 +15,12 @@ export default function NewAssignmentModal({ isOpen, setIsOpen, onModalSubmit })
 		Content: "",
 		ContentType: "",
 	});
+	const [showToast, setShowToast] = useState(false);
+	const [toastMessage, setToastMessage] = useState("");
+
+	const showToastMessage = () => {
+		setShowToast(true);
+	};
 
 	const handleChange = (e, fieldName) => {
 		const { value } = e.target;
@@ -42,6 +49,10 @@ export default function NewAssignmentModal({ isOpen, setIsOpen, onModalSubmit })
 			}
 		} catch (error) {
 			console.error("Error submitting form:", error);
+			if (error.response.data.code === 1) {
+				setToastMessage("Assignment name already exists");
+				showToastMessage();
+			}
 		}
 	};
 
@@ -98,6 +109,7 @@ export default function NewAssignmentModal({ isOpen, setIsOpen, onModalSubmit })
 					)}
 				</ModalContent>
 			</Modal>
+			{showToast && <ToastNotification message={`Error: ${toastMessage}`} onClose={() => setShowToast(false)} />}
 		</>
 	);
 }
