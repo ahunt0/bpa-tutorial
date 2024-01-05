@@ -146,7 +146,7 @@ export default function Courses() {
 													Edit
 												</div>
 											</DropdownItem>
-											<DropdownItem className="text-default-600">
+											<DropdownItem href={`/admin/assignments/${course.CourseId}`} className="text-default-600">
 												<div className="flex">
 													<BookOpenIcon className="w-4 mr-2" />
 													Manage
