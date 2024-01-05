@@ -55,7 +55,7 @@ export default function Users() {
 				endpoint = `http://localhost:3001/api/v1/admin/users/find?role=${selectedRole}`;
 			}
 
-			response = await axios.get(endpoint);
+			response = await axios.get(endpoint, { withCredentials: true });
 			setUserData(response.data.users);
 			const totalPagesCount = Math.ceil(response.data.users.length / pageSize);
 			setTotalPages(totalPagesCount);
@@ -124,7 +124,7 @@ export default function Users() {
 			<div className="flex mb-4 bg-default-50 p-4 rounded-xl">
 				<Input
 					className="w-96 mr-4"
-					placeholder="Search by name..."
+					placeholder="Search for user..."
 					size="sm"
 					radius="lg"
 					fullWidth={false}
@@ -160,50 +160,39 @@ export default function Users() {
 					<TableColumn>ROLE</TableColumn>
 					<TableColumn>ACTIONS</TableColumn>
 				</TableHeader>
-				<TableBody emptyContent="No users found.">
-					{loading ? ( // Render loading indicator if loading is true
-						<TableRow>
-							<TableCell colSpan={3} align="center">
-								<Spinner />
+				<TableBody emptyContent="No users found." isLoading={loading} loadingContent={<Spinner />}>
+					{displayedUsers.map((user, index) => (
+						<TableRow key={user.UserID}>
+							<TableCell>{user.UserID}</TableCell>
+							<TableCell>
+								<User name={`${user.FirstName} ${user.LastName}`} description={user.Email} />
 							</TableCell>
-							<TableCell></TableCell>
-							<TableCell></TableCell>
-							<TableCell></TableCell>
+							<TableCell className="capitalize">{user.Access}</TableCell>
+							<TableCell>
+								<Dropdown className="dark">
+									<DropdownTrigger>
+										<Button isIconOnly size="sm" variant="light">
+											<EllipsisHorizontalIcon className="text-default-400" />
+										</Button>
+									</DropdownTrigger>
+									<DropdownMenu>
+										<DropdownItem href={`/admin/user/${user.UserID}`} className="text-default-600">
+											<div className="flex">
+												<PencilIcon className="w-4 mr-2" />
+												Edit
+											</div>
+										</DropdownItem>
+										<DropdownItem onClick={() => deleteUser(user.UserID)} className="text-danger">
+											<div className="flex">
+												<TrashIcon className="w-4 mr-2" />
+												Delete
+											</div>
+										</DropdownItem>
+									</DropdownMenu>
+								</Dropdown>
+							</TableCell>
 						</TableRow>
-					) : (
-						displayedUsers.map((user, index) => (
-							<TableRow key={user.UserID}>
-								<TableCell>{user.UserID}</TableCell>
-								<TableCell>
-									<User name={`${user.FirstName} ${user.LastName}`} description={user.Email} />
-								</TableCell>
-								<TableCell className="capitalize">{user.Access}</TableCell>
-								<TableCell>
-									<Dropdown className="dark">
-										<DropdownTrigger>
-											<Button isIconOnly size="sm" variant="light">
-												<EllipsisHorizontalIcon className="text-default-400" />
-											</Button>
-										</DropdownTrigger>
-										<DropdownMenu>
-											<DropdownItem href={`/admin/user/${user.UserID}`} className="text-default-600">
-												<div className="flex">
-													<PencilIcon className="w-4 mr-2" />
-													Edit
-												</div>
-											</DropdownItem>
-											<DropdownItem onClick={() => deleteUser(user.UserID)} className="text-danger">
-												<div className="flex">
-													<TrashIcon className="w-4 mr-2" />
-													Delete
-												</div>
-											</DropdownItem>
-										</DropdownMenu>
-									</Dropdown>
-								</TableCell>
-							</TableRow>
-						))
-					)}
+					))}
 				</TableBody>
 			</Table>
 			{showToast && <ToastNotification message="User deleted successfully" onClose={() => setShowToast(false)} />}

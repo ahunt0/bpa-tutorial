@@ -5,6 +5,9 @@ import RegistrationForm from "./Components/Auth/RegistrationForm";
 import Dashboard from "./Components/Admin/Dashboard";
 import Users from "./Components/Admin/Users";
 import UserEdit from "./Components/Admin/UserEdit";
+import Courses from "./Components/Admin/Courses";
+import CourseEdit from "./Components/Admin/CourseEdit";
+import Assignments from "./Components/Admin/Assignments";
 import { NextUIProvider } from "@nextui-org/react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -19,9 +22,13 @@ root.render(
 					<Route path="/login" element={<LoginForm />} />
 					<Route path="/register" element={<RegistrationForm />} />
 					<Route path="*" element={<UserEdit />} /> {/* temporary default route */}
+					{/* Admin Routes */}
 					<Route path="/admin/users" element={<Users />} />
 					<Route path="/admin/user/:id" element={<UserEdit />} />
 					<Route path="/admin" element={<Dashboard />} />
+					<Route path="/admin/courses" element={<Courses />} />
+					<Route path="/admin/course/:id" element={<CourseEdit />} />
+					<Route path="/admin/assignments/:id" element={<Assignments />} />
 				</Routes>
 			</AnimatePresence>
 		</Router>

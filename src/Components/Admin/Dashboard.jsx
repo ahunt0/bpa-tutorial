@@ -30,7 +30,7 @@ export default function Dashboard() {
 	useEffect(() => {
 		const fetchData = async (url, setData) => {
 			try {
-				const response = await axios.get(`http://localhost:3001/api/v1/admin/users/${url}`);
+				const response = await axios.get(`http://localhost:3001/api/v1/admin/users/${url}`, { withCredentials: true });
 				setData(response.data.total || response.data.usersCountToday);
 			} catch (error) {
 				console.error(`Error fetching ${url}:`, error);

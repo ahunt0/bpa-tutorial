@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button, Divider, Checkbox } from "@nextui-org/react";
 import AuthBase from "./AuthBase";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import ForgotPassModal from "./ForgotPassModal";
 import axios from "axios";
@@ -9,6 +9,7 @@ import ToastNotification from "../Common/ToastNotification";
 
 export default function LoginForm() {
 	const location = useLocation();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (location.state && location.state.message) {
@@ -38,9 +39,13 @@ export default function LoginForm() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post(`http://localhost:3001/api/v1/auth/login`, user);
+			const response = await axios.post(`http://localhost:3001/api/v1/auth/login`, user, { withCredentials: true });
 			console.log(response.data);
 			// Handle success or any other actions
+			if (response.data.success) {
+				// If successful, redirect to login page
+				navigate("/admin");
+			}
 		} catch (error) {
 			console.error("Error submitting form:", error);
 			// Handle error
@@ -77,7 +82,7 @@ export default function LoginForm() {
 					<h1 className="text-4xl font-bold mb-4">Login</h1>
 					<div className="mb-4">
 						<p className="text-xl mb-4 text-default-600">
-							Welcome to <span className="text-primary-500">PLACEHOLDER</span>
+							Welcome to <span className="text-primary-500 text-2xl underline">LearnX</span>
 						</p>
 						{error && <p className="text-red-500">{error}</p>}
 					</div>

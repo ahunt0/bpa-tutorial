@@ -14,7 +14,7 @@ export default function Sidebar({ className, currentPage }) {
 				<SidebarButton selected={currentPage === "users"} className="mt-4" to="/admin/users">
 					<UsersIcon className="w-6 mr-2" /> Users
 				</SidebarButton>
-				<SidebarButton selected={currentPage === "courses"} className="mt-4" to="./">
+				<SidebarButton selected={currentPage === "courses"} className="mt-4" to="/admin/courses">
 					<AssignmentsIcon className="w-6 mr-2" /> Courses
 				</SidebarButton>
 				<SidebarButton selected={currentPage === "logs"} className="mt-4" to="./">

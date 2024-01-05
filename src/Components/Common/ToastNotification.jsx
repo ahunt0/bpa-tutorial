@@ -20,7 +20,7 @@ const ToastNotification = ({ message, onClose }) => {
 	}, [controls, onClose]);
 
 	return (
-		<motion.div initial={{ opacity: 0, y: "-100%" }} animate={controls} className="fixed bottom-0 right-0 mb-4 mr-4 bg-default-50 text-white py-4 px-4 rounded-md shadow-md flex back">
+		<motion.div initial={{ opacity: 0, y: "-100%" }} animate={controls} className="fixed bottom-0 right-0 mb-4 mr-4 bg-default-50 text-white py-4 px-4 rounded-md shadow-md flex back z-[60]">
 			<InformationIcon className="w-6 mr-2" />
 			<p>{message}</p>
 		</motion.div>

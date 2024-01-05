@@ -25,7 +25,7 @@ export default function UserEdit() {
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				const response = await axios.get(`http://localhost:3001/api/v1/admin/user/${id}`);
+				const response = await axios.get(`http://localhost:3001/api/v1/admin/user/${id}`, { withCredentials: true });
 				setUser(response.data.user);
 
 				if (response.data.user) {
@@ -56,8 +56,8 @@ export default function UserEdit() {
 		e.preventDefault();
 
 		try {
-			await axios.put(`http://localhost:3001/api/v1/admin/user/edit/${id}`, formData);
-			console.log(formData);
+			await axios.put(`http://localhost:3001/api/v1/admin/user/edit/${id}`, formData, { withCredentials: true });
+
 			showToastMessage();
 		} catch (error) {
 			console.error(error);

@@ -6,51 +6,61 @@ import { motion } from "framer-motion";
 import axios from "axios";
 
 export default function RegistrationForm() {
-	// Register api call
 	const [user, setUser] = useState({
 		firstName: "",
 		lastName: "",
 		email: "",
 		password: "",
-		// confirmPassword: "",
+		confirmPassword: "",
 	});
 
 	const navigate = useNavigate();
 	const [error, setError] = useState(null);
 
-	// Form submission
 	const handleChange = (e, fieldName) => {
 		const { value } = e.target;
+
+		if (fieldName === "password" || fieldName === "confirmPassword") {
+			// Check if passwords match
+			if (fieldName === "confirmPassword" && user.password !== value) {
+				setError("Passwords do not match");
+			} else {
+				setError(null);
+			}
+		}
+
 		setUser((prev) => ({ ...prev, [fieldName]: value }));
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		// Check if passwords match
+		if (user.password !== user.confirmPassword) {
+			setError("Passwords do not match");
+			return;
+		}
+
 		try {
 			const response = await axios.post(`http://localhost:3001/api/v1/auth/register`, user);
 			console.log(response.data);
 
 			if (response.data.success) {
-				// If successful, redirect to login page
 				navigate("/login", { state: { message: "User created successfully" } });
 			}
 		} catch (error) {
 			console.error("Error submitting form:", error);
-			// Handle error
 			if (error.response && error.response.data && error.response.data.message) {
-				// If there's a message in the error response, set it as an error message for the user
 				setError(error.response.data.message);
 			} else {
-				// Handle other error scenarios
 				setError("An unknown error occurred. Please try again later.");
 			}
 		}
 	};
 
-	// Email Validation
 	const [value, setValue] = React.useState("");
 
-	const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+	const validateEmail = (value) => value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
 
 	const isInvalid = React.useMemo(() => {
 		if (value === "") return false;
@@ -88,9 +98,27 @@ export default function RegistrationForm() {
 								}}
 								value={value}
 								className="mb-4"
-							/>{" "}
-							<Input type="password" label="Password" isRequired className="mb-4" value={user.password} onChange={(e) => handleChange(e, "password")} />
-							<Input type="password" label="Confirm Password" isRequired className="mb-4" />
+							/>
+							<Input
+								type="password"
+								label="Password"
+								isRequired
+								variant={error === "Passwords do not match" ? "bordered" : "flat"}
+								isInvalid={error === "Passwords do not match"}
+								className="mb-4"
+								value={user.password}
+								onChange={(e) => handleChange(e, "password")}
+							/>
+							<Input
+								type="password"
+								label="Confirm Password"
+								isRequired
+								variant={error === "Passwords do not match" ? "bordered" : "flat"}
+								isInvalid={error === "Passwords do not match"}
+								className="mb-4"
+								value={user.confirmPassword}
+								onChange={(e) => handleChange(e, "confirmPassword")}
+							/>
 							<Checkbox color="primary" className="mb-4">
 								I agree to the{" "}
 								<Link to="#" className="text-primary-500 hover:text-primary-600 ease-in-out duration-400 underline underline-offset-4">
