@@ -61,6 +61,10 @@ export default function Assignments() {
 		fetchAssignmentsData();
 	}, []);
 
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+	};
+
 	const startIndex = (currentPage - 1) * pageSize;
 	const endIndex = currentPage + pageSize;
 	const displayedAssignments = assignments.slice(startIndex, endIndex);
@@ -92,7 +96,7 @@ export default function Assignments() {
 								<TableCell>{assignment.AssignmentName}</TableCell>
 								<TableCell>{new Date(assignment.Deadline).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true })}</TableCell>
 								<TableCell className="text-foreground-400 font-mono">{assignment.Description}</TableCell>
-								<TableCell>{assignment.ContentType}</TableCell>
+								<TableCell className="capitalize">{assignment.ContentType}</TableCell>
 								<TableCell>
 									<Dropdown className="dark">
 										<DropdownTrigger>
@@ -101,7 +105,7 @@ export default function Assignments() {
 											</Button>
 										</DropdownTrigger>
 										<DropdownMenu>
-											<DropdownItem href={`/admin/assignment/1`} className="text-default-600">
+											<DropdownItem className="text-default-600">
 												<div className="flex">
 													<PencilIcon className="w-4 mr-2" />
 													Edit
@@ -128,6 +132,7 @@ export default function Assignments() {
 				</Table>
 			</div>
 			<NewAssignmentModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+			{totalPages > 1 && <Pagination className="absolute bottom-8" showControls="true" total={totalPages} current={currentPage} onChange={handlePageChange} />}
 		</AdminBase>
 	);
 }

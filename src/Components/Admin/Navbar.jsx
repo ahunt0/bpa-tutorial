@@ -21,11 +21,14 @@ export default function AdminBase({ children, className }) {
 	// Regex pattern to match '/admin/user/' followed by a number
 	const userEditPattern = /^\/admin\/user\/\d+$/;
 	const courseEditPattern = /^\/admin\/course\/\d+$/;
+	const assignmentEditPattern = /^\/admin\/assignments\/\d+$/;
 
 	if (userEditPattern.test(currentPage)) {
 		pageTitle = "Edit User";
 	} else if (courseEditPattern.test(currentPage)) {
 		pageTitle = "Edit Course";
+	} else if (assignmentEditPattern.test(currentPage)) {
+		pageTitle = "Assignments";
 	} else {
 		pageTitle = pageTitleMap[currentPage] || "Default Title";
 	}
