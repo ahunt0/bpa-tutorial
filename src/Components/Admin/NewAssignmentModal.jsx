@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectSection, SelectItem, Textarea, User } from "@nextui-org/react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-export default function NewAssignmentModal({ isOpen, setIsOpen }) {
+export default function NewAssignmentModal({ isOpen, setIsOpen, onModalSubmit }) {
 	const [contentType, setContentType] = useState(new Set([]));
+	const { id } = useParams();
 	const [assignment, setAssignment] = useState({
+		CourseId: id,
 		AssignmentName: "",
 		Deadline: "",
 		Description: "",
@@ -16,8 +19,30 @@ export default function NewAssignmentModal({ isOpen, setIsOpen }) {
 		const { value } = e.target;
 
 		setAssignment((prev) => ({ ...prev, [fieldName]: value }));
+	};
 
-		console.log(assignment);
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			const response = await axios.post(`http://localhost:3001/api/v1/admin/assignments/create`, assignment, { withCredentials: true });
+			setIsOpen(false);
+
+			setAssignment({
+				CourseId: id,
+				AssignmentName: "",
+				Deadline: "",
+				Description: "",
+				Content: "",
+				ContentType: "",
+			});
+
+			if (typeof onModalSubmit === "function") {
+				onModalSubmit();
+			}
+		} catch (error) {
+			console.error("Error submitting form:", error);
+		}
 	};
 
 	useEffect(() => {
@@ -32,7 +57,7 @@ export default function NewAssignmentModal({ isOpen, setIsOpen }) {
 				<ModalContent>
 					{(onClose) => (
 						<>
-							<form>
+							<form onSubmit={handleSubmit}>
 								<ModalHeader className="flex flex-col gap-1">
 									<p className="text-xl font-bold">New Assignment</p>
 									<p className="text-default-600 text-sm font-thin">Create a new assignment by filling in the required information.</p>

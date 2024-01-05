@@ -131,7 +131,7 @@ export default function Assignments() {
 					</TableBody>
 				</Table>
 			</div>
-			<NewAssignmentModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+			<NewAssignmentModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} onModalSubmit={fetchAssignmentsData} />
 			{totalPages > 1 && <Pagination className="absolute bottom-8" showControls="true" total={totalPages} current={currentPage} onChange={handlePageChange} />}
 		</AdminBase>
 	);
