@@ -19,17 +19,51 @@ import {
 	DropdownItem,
 	Pagination,
 	Spinner,
+	Tab,
 } from "@nextui-org/react";
 import { SearchIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon, BookOpenIcon } from "../Common/Icons";
 import NewAssignmentModal from "./NewAssignmentModal";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function Assignments() {
+	const { id } = useParams();
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [assignments, setAssignments] = useState([]);
+	const [searchInput, setSearchInput] = useState("");
+	const [currentPage, setCurrentPage] = useState(1);
+	const pageSize = 8; // Results per page
+	const [totalPages, setTotalPages] = useState(0);
+	const [loading, setLoading] = useState(false); // Loading state
 
 	const onOpen = () => {
 		setIsModalOpen(true);
 	};
+
+	const fetchAssignmentsData = async () => {
+		try {
+			setLoading(true);
+			const endpoint = searchInput ? `http://localhost:3001/api/v1/admin/assignments/find/${searchInput}` : `http://localhost:3001/api/v1/admin/assignments/${id}`;
+			const response = await axios.get(endpoint, { withCredentials: true });
+			setAssignments(response.data.assignments);
+			const totalPagesCount = Math.ceil(response.data.assignments.length / pageSize);
+			setTotalPages(totalPagesCount);
+		} catch (error) {
+			console.error("Error fetching assignments:", error);
+			setAssignments([]);
+			setTotalPages(0);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchAssignmentsData();
+	}, []);
+
+	const startIndex = (currentPage - 1) * pageSize;
+	const endIndex = currentPage + pageSize;
+	const displayedAssignments = assignments.slice(startIndex, endIndex);
 
 	return (
 		<AdminBase>
@@ -42,6 +76,56 @@ export default function Assignments() {
 						New Assignment
 					</Button>
 				</div>
+				<Table className="w-full">
+					<TableHeader>
+						<TableColumn>ID</TableColumn>
+						<TableColumn>NAME</TableColumn>
+						<TableColumn>DUE DATE</TableColumn>
+						<TableColumn>DESCRIPTION</TableColumn>
+						<TableColumn>CONTENT TYPE</TableColumn>
+						<TableColumn>ACTIONS</TableColumn>
+					</TableHeader>
+					<TableBody emptyContent="No assignments found." isLoading={loading} loadingContent={<Spinner />}>
+						{displayedAssignments.map((assignment) => (
+							<TableRow key={assignment.AssignmentID}>
+								<TableCell>{assignment.AssignmentID}</TableCell>
+								<TableCell>{assignment.AssignmentName}</TableCell>
+								<TableCell>{new Date(assignment.Deadline).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true })}</TableCell>
+								<TableCell className="text-foreground-400 font-mono">{assignment.Description}</TableCell>
+								<TableCell>{assignment.ContentType}</TableCell>
+								<TableCell>
+									<Dropdown className="dark">
+										<DropdownTrigger>
+											<Button isIconOnly size="sm" variant="light">
+												<EllipsisHorizontalIcon className="text-default-400" />
+											</Button>
+										</DropdownTrigger>
+										<DropdownMenu>
+											<DropdownItem href={`/admin/assignment/1`} className="text-default-600">
+												<div className="flex">
+													<PencilIcon className="w-4 mr-2" />
+													Edit
+												</div>
+											</DropdownItem>
+											<DropdownItem className="text-default-600">
+												<div className="flex">
+													<BookOpenIcon className="w-4 mr-2" />
+													View
+												</div>
+											</DropdownItem>
+											<DropdownItem className="text-danger">
+												<div className="flex">
+													<TrashIcon className="w-4 mr-2" />
+													Delete
+												</div>
+											</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
 			</div>
 			<NewAssignmentModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 		</AdminBase>
