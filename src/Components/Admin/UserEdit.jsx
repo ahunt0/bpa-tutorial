@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminBase from "./AdminBase";
-import { Card, CardBody, Input, RadioGroup, Radio, Button } from "@nextui-org/react";
+import { Card, CardBody, Input, RadioGroup, Radio, Button, Select, SelectSection, SelectItem } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ToastNotification from "../Common/ToastNotification";
@@ -15,6 +15,7 @@ export default function UserEdit() {
 		Email: "",
 		Access: "",
 	});
+	const grades = ["Kindergarten", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
 
 	const [showToast, setShowToast] = useState(false);
 
@@ -75,15 +76,32 @@ export default function UserEdit() {
 								{user ? (
 									<div className="">
 										<div className="flex space-x-4 my-4">
-											<Input label="First Name" name="FirstName" value={formData.FirstName} onChange={handleInputChange} />
-											<Input label="Last Name" name="LastName" value={formData.LastName} onChange={handleInputChange} />
+											<Input label="First Name" name="FirstName" isRequired value={formData.FirstName} onChange={handleInputChange} />
+											<Input label="Last Name" name="LastName" isRequired value={formData.LastName} onChange={handleInputChange} />
 										</div>
-										<Input label="Email" name="Email" value={formData.Email} onChange={handleInputChange} className="mb-4" />
-										<RadioGroup label="Role" name="Access" value={formData.Access} onValueChange={(value) => setFormData({ ...formData, Access: value })} orientation="horizontal" className="mb-4">
+										<Input label="Email" name="Email" value={formData.Email} onChange={handleInputChange} isRequired className="mb-4" />
+										<RadioGroup
+											label="Role"
+											name="Access"
+											value={formData.Access}
+											isRequired
+											onValueChange={(value) => setFormData({ ...formData, Access: value })}
+											orientation="horizontal"
+											className="mb-4"
+										>
 											<Radio value="student">Student</Radio>
 											<Radio value="teacher">Teacher</Radio>
 											<Radio value="admin">Admin</Radio>
 										</RadioGroup>
+										<Select label="Grade" radius="lg" isRequired className="mb-4">
+											<SelectSection title="Grades">
+												{grades.map((grade) => (
+													<SelectItem key={grade} value={grade}>
+														{grade}
+													</SelectItem>
+												))}
+											</SelectSection>
+										</Select>
 										<Input
 											label="Registration Date"
 											value={new Date(user.RegistrationDate).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true })}

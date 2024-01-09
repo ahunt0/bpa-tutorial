@@ -19,6 +19,7 @@ import {
 	DropdownTrigger,
 	DropdownMenu,
 	DropdownItem,
+	Checkbox,
 } from "@nextui-org/react";
 import { SearchIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon } from "../Common/Icons";
 import axios from "axios";
@@ -33,6 +34,7 @@ export default function Users() {
 	const [loading, setLoading] = useState(false); // Loading state
 	const [selectedRole, setSelectedRole] = useState(""); // State to capture the selected role
 	const [showToast, setShowToast] = useState(false);
+	const [showUnassignedStudents, setShowUnassignedStudents] = useState(false);
 
 	const showToastMessage = () => {
 		setShowToast(true);
@@ -42,23 +44,31 @@ export default function Users() {
 		try {
 			setLoading(true);
 			let response;
-			let endpoint = "http://localhost:3001/api/v1/admin/users/";
+			if (showUnassignedStudents) {
+				response = await axios.get("http://localhost:3001/api/v1/admin/users/unassigned", { withCredentials: true });
+				setUserData(response.data.unassignedStudents);
+				const totalPagesCount = Math.ceil(response.data.unassignedStudents.length / pageSize);
+				setTotalPages(totalPagesCount);
+				return;
+			} else {
+				let endpoint = "http://localhost:3001/api/v1/admin/users/";
 
-			if (searchInput !== "") {
-				endpoint = `http://localhost:3001/api/v1/admin/users/find/${searchInput}`;
-				if (selectedRole !== "") {
-					// Include role in endpoint if selected
-					endpoint += `?role=${selectedRole}`;
+				if (searchInput !== "") {
+					endpoint = `http://localhost:3001/api/v1/admin/users/find/${searchInput}`;
+					if (selectedRole !== "") {
+						// Include role in endpoint if selected
+						endpoint += `?role=${selectedRole}`;
+					}
+				} else if (selectedRole !== "") {
+					// Construct the endpoint based on selected role only
+					endpoint = `http://localhost:3001/api/v1/admin/users/find?role=${selectedRole}`;
 				}
-			} else if (selectedRole !== "") {
-				// Construct the endpoint based on selected role only
-				endpoint = `http://localhost:3001/api/v1/admin/users/find?role=${selectedRole}`;
-			}
 
-			response = await axios.get(endpoint, { withCredentials: true });
-			setUserData(response.data.users);
-			const totalPagesCount = Math.ceil(response.data.users.length / pageSize);
-			setTotalPages(totalPagesCount);
+				response = await axios.get(endpoint, { withCredentials: true });
+				setUserData(response.data.users);
+				const totalPagesCount = Math.ceil(response.data.users.length / pageSize);
+				setTotalPages(totalPagesCount);
+			}
 		} catch (error) {
 			console.error("Error fetching users:", error);
 			setUserData([]);
@@ -86,7 +96,7 @@ export default function Users() {
 
 	useEffect(() => {
 		fetchUsers();
-	}, [searchInput, selectedRole]); // Fetch when search input or selected role changes
+	}, [searchInput, selectedRole, showUnassignedStudents]); // Fetch when search input or selected role changes
 
 	const handleRoleChange = (value) => {
 		// Check if the value is an object with 'student' property
@@ -131,6 +141,7 @@ export default function Users() {
 					startContent={<SearchIcon className={"w-5 text-default-600"} />}
 					value={searchInput}
 					onChange={(e) => handleSearch(e.target.value)}
+					isDisabled={showUnassignedStudents}
 				/>
 				<Select
 					label="Role"
@@ -138,6 +149,7 @@ export default function Users() {
 					size="sm"
 					radius="lg"
 					onSelectionChange={(value) => handleRoleChange(value)} // Handle role change
+					isDisabled={showUnassignedStudents}
 				>
 					<SelectSection title="Role">
 						<SelectItem key="student" value="student">
@@ -151,6 +163,15 @@ export default function Users() {
 						</SelectItem>
 					</SelectSection>
 				</Select>
+				<Checkbox
+					className="ml-4 group"
+					onValueChange={setShowUnassignedStudents}
+					classNames={{
+						label: "text-default-500 group-hover:text-default-600",
+					}}
+				>
+					Unassigned students
+				</Checkbox>
 			</div>
 
 			<Table aria-label="User list">
