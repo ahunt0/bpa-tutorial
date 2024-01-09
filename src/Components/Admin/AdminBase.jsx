@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Nav from "./Navbar";
 import Sidebar from "./Sidebar";
-import Dashboard from "./Dashboard";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "@nextui-org/react";
 

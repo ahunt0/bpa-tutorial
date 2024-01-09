@@ -1,26 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminBase from "./AdminBase";
-import {
-	Table,
-	TableHeader,
-	TableColumn,
-	TableBody,
-	TableRow,
-	TableCell,
-	Input,
-	Select,
-	SelectSection,
-	SelectItem,
-	Button,
-	User,
-	Dropdown,
-	DropdownTrigger,
-	DropdownMenu,
-	DropdownItem,
-	Pagination,
-	Spinner,
-	Tab,
-} from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Input, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Pagination, Spinner } from "@nextui-org/react";
 import { SearchIcon, EllipsisHorizontalIcon, PencilIcon, TrashIcon, BookOpenIcon } from "../Common/Icons";
 import NewAssignmentModal from "./NewAssignmentModal";
 import axios from "axios";

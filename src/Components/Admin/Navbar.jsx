@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { UserIcon, InboxIcon } from "../Common/Icons";
-import { Divider, Badge, user } from "@nextui-org/react";
+import { Divider, Badge } from "@nextui-org/react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 

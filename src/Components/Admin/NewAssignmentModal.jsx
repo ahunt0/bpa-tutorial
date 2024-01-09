@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectSection, SelectItem, Textarea, User } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Select, SelectSection, SelectItem, Textarea } from "@nextui-org/react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ToastNotification from "../Common/ToastNotification";

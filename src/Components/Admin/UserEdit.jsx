@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminBase from "./AdminBase";
-import { Card, CardBody, Skeleton, Input, RadioGroup, Radio, Button } from "@nextui-org/react";
+import { Card, CardBody, Input, RadioGroup, Radio, Button } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ToastNotification from "../Common/ToastNotification";
