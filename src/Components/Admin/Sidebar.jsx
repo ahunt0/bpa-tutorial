@@ -2,11 +2,12 @@ import React from "react";
 import SidebarButton from "../Common/SidebarButton";
 import { DashboardIcon, UsersIcon, LogsIcon, AssignmentsIcon, SettingsIcon, LogoutIcon } from "../Common/Icons";
 import { Divider } from "@nextui-org/react";
+import { ReactComponent as Logo } from "../../Assets/Images/Logo.svg";
 
 export default function Sidebar({ className, currentPage }) {
 	return (
 		<div className={`dark h-screen w-1/6 bg-default-50 flex flex-col ${className} left-0 top-0`}>
-			<p className="text-white mb-8 text-center mt-6">LOGO HERE</p>
+			<Logo className="fill-white h-12 mt-4" />
 			<div className="mt-8 w-full flex flex-col justify-center items-center">
 				<SidebarButton selected={currentPage === "dashboard"} to="/admin">
 					<DashboardIcon className="w-6 mr-2" /> Dashboard

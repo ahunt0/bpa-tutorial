@@ -14,8 +14,9 @@ export default function UserEdit() {
 		LastName: "",
 		Email: "",
 		Access: "",
+		GradeLevel: "",
 	});
-	const grades = ["Kindergarten", "1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th", "11th", "12th"];
+	const grades = ["Kindergarten", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
 
 	const [showToast, setShowToast] = useState(false);
 
@@ -30,12 +31,13 @@ export default function UserEdit() {
 				setUser(response.data.user);
 
 				if (response.data.user) {
-					const { FirstName, LastName, Email, Access } = response.data.user;
+					const { FirstName, LastName, Email, Access, GradeLevel } = response.data.user;
 					setFormData({
 						FirstName: FirstName || "",
 						LastName: LastName || "",
 						Email: Email || "",
 						Access: Access || "",
+						GradeLevel: GradeLevel || "",
 					});
 				}
 			} catch (error) {
@@ -93,15 +95,17 @@ export default function UserEdit() {
 											<Radio value="teacher">Teacher</Radio>
 											<Radio value="admin">Admin</Radio>
 										</RadioGroup>
-										<Select label="Grade" radius="lg" isRequired className="mb-4">
-											<SelectSection title="Grades">
-												{grades.map((grade) => (
-													<SelectItem key={grade} value={grade}>
-														{grade}
-													</SelectItem>
-												))}
-											</SelectSection>
-										</Select>
+										{formData.Access === "student" && (
+											<Select label="Grade Level" radius="lg" isRequired className="mb-4" defaultSelectedKeys={formData.GradeLevel} onChange={handleInputChange} name="GradeLevel">
+												<SelectSection title="Grades">
+													{grades.map((grade) => (
+														<SelectItem key={grade} value={formData.GradeLevel}>
+															{grade}
+														</SelectItem>
+													))}
+												</SelectSection>
+											</Select>
+										)}
 										<Input
 											label="Registration Date"
 											value={new Date(user.RegistrationDate).toLocaleString(undefined, { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour12: true })}
