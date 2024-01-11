@@ -3,9 +3,3 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
-
-/* Placeholder background */
-body {
-	background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-	/* font-family: "Noto Sans", sans-serif; */
-}

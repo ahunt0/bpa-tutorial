@@ -75,7 +75,7 @@ export default function RegistrationForm() {
 					<h1 className="text-4xl font-bold mb-4">Register</h1>
 					<div className="mb-4">
 						<p className="text-xl mb-4 text-default-600">
-							Please register to access <span className="text-primary-500">PLACEHOLDER</span>
+							Please register to access <span className="text-primary-500 text-2xl underline">LearnX</span>
 						</p>
 						{error && <p className="text-red-500">{error}</p>}
 					</div>
